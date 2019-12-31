@@ -1,0 +1,54 @@
+{% extends "public/base.jinja2" %}
+{% block nav %}
+    <div class="x-nav">
+    <span class="layui-breadcrumb">
+        <a href="">{{ cmd_prj }}</a>
+        <a href="">{{ cmd_app }}</a>
+        <a href="">cmd</a>
+        <a><cite>{{ cmd_name }}</cite></a>
+    </span>
+        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+           onclick="location.reload()" title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+        </a>
+    </div>{% endblock %}
+{% block body %}
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body ">
+                        <form class="layui-form layui-col-space5">
+                            <div class="layui-inline layui-show-xs-block">
+                                <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start">
+                            </div>
+                            <div class="layui-inline layui-show-xs-block">
+                                <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end">
+                            </div>
+                            <div class="layui-inline layui-show-xs-block">
+                                <input type="text" name="username" placeholder="请输入用户名" autocomplete="off"
+                                       class="layui-input"></div>
+                            <div class="layui-inline layui-show-xs-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                                    <i class="layui-icon">&#xe615;</i></button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-card-body" id="view">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>{% endblock %}
+{% block script %}
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckData"> 获取选中行数据</button>
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+            <button class="layui-btn layui-btn-sm" lay-event="isAll"> 验证是否全选</button>
+        </div>
+    </script>
+    <script type="text/javascript" src="{{ static("/js/cmd.js") }}"></script>
+    <script></script>
+    <script></script>{% endblock %}

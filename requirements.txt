@@ -1,0 +1,5 @@
+jinja2
+aiohttp
+aiohttp-jinja2
+apscheduler
+gitpython
