@@ -25,13 +25,13 @@ from aiohttp.web_urldispatcher import View
 @middleware
 async def mid_project(request: Request, handler: Callable[[Request], Awaitable[StreamResponse]]) -> StreamResponse:
     if 'project' in request.match_info and 'application' in request.match_info:
-        persudo_name = 'persudo_{project}_{application}'.format(
+        persudo_name = '{project}_{application}'.format(
             project=request.match_info.get('project', ''),
             application=request.match_info.get('application', ''),
         )
-        if persudo_name not in request.app:
+        if persudo_name not in request.app['persudo']:
             return web.json_response({'code': -1, 'msg': '操作失败，项目未找到'})
-        request['persudo'] = request.app['persudo_rfq_inn']
+        request['persudo'] = request.app['persudo'][persudo_name]
     resp = await handler(request)
     return resp
 

@@ -50,10 +50,11 @@
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table" lay-filter="test"
-                           lay-data="{url:'{{ url('api_struct',project=project,application=application,name='') }}',page:true,autoSort:false,toolbar:'#toolbarDemo',id:'test'}">
+                           lay-data="{url:'/sge_info_api/{{ project }}/{{ application }}/struct/',page:true,autoSort:false,toolbar:'#toolbarDemo',id:'test'}">
                         <thead>
                         <tr>
-                            <th lay-data="{field:'_id', type:'checkbox'}">ID</th>
+                            <th lay-data="{type:'numbers'}"></th>
+                            <th lay-data="{field:'id', sort:true}">ID</th>
                             <th lay-data="{field:'name', sort:true, edit:'text'}">名称</th>
                             <th lay-data="{field:'type', sort:true, edit:'text'}">类型</th>
                             <th lay-data="{field:'length', sort:true, edit:'text', width:80}">长度</th>

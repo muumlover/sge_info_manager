@@ -27,13 +27,7 @@ class CMDInfo(APIView):
         start = (int(page) - 1) * int(limit)
         end = start + int(limit) if limit != '0' else None
 
-        cmd_all = [{
-            '_id': cmd['type'],
-            'name': cmd['name'],
-            'cmdno': cmd['cmdno'],
-            'ch_name': cmd['ch_name'],
-            'gtp': cmd['gtp'],
-        } for cmd in self.request['persudo'].cmd_find_all()]
+        cmd_all = self.request['persudo'].find_all_cmd()
 
         if field and order:
             cmd_all.sort(key=lambda item: item.get(field), reverse=order == 'desc')
@@ -45,27 +39,27 @@ class CMDInfo(APIView):
     async def get(self):
         name = self.request.match_info.get('name', '')
         persudo = self.request['persudo']
-        cmd_const, cmd_struct = persudo.cmd_find(name)
-        if not cmd_const or not cmd_struct:
+        cmd_info = persudo.find_cmd(name)
+        if not cmd_info:
             return web.json_response({'code': -1, 'msg': '数据不存在'})
-        ret_data = {
-            '_id': cmd_const['type'],
-            'name': cmd_const['name'],
-            'cmdno': cmd_const['cmdno'],
-            'ch_name': cmd_const['ch_name'],
-            'gtp': cmd_const['gtp'],
-            'fields': [{
-                'f_name': fields['name'],
-                'f_type': {**{
-                    't_id': persudo.struct_id(fields['type']),
-                    't_name': persudo.struct_name(fields['type']),
-                }, **dict(zip(
-                    ['t_group', 't_type', 't_length'],
-                    persudo.struct_type(fields['type'])
-                ))}
-            } for fields in cmd_struct['sub']]
-        }
-        return web.json_response({'code': 0, 'msg': '操作成功', 'data': ret_data})
+        # ret_data = {
+        #     '_id': cmd_const['type'],
+        #     'name': cmd_const['name'],
+        #     'cmdno': cmd_const['cmdno'],
+        #     'ch_name': cmd_const['ch_name'],
+        #     'gtp': cmd_const['gtp'],
+        #     'fields': [{
+        #         'f_name': fields['name'],
+        #         'f_type': {**{
+        #             't_id': persudo.struct_id(fields['type']),
+        #             't_name': persudo.struct_name(fields['type']),
+        #         }, **dict(zip(
+        #             ['t_group', 't_type', 't_length'],
+        #             persudo.struct_mem(fields['type'])
+        #         ))}
+        #     } for fields in cmd_struct['sub']]
+        # }
+        return web.json_response({'code': 0, 'msg': '操作成功', 'data': cmd_info})
 
     async def post(self):
         return web.json_response({'code': 0, 'msg': '操作成功', })

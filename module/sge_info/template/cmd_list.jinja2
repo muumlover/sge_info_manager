@@ -50,14 +50,15 @@
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table" lay-filter="test"
-                           lay-data="{url:'{{ url('api_cmd',project=project,application=application,name='') }}',page:true,autoSort:false,toolbar:'#toolbarDemo',id:'test'}">
+                           lay-data="{url:'/sge_info_api/{{ project }}/{{ application }}/cmd/',page:true,autoSort:false,toolbar:'#toolbarDemo',id:'test'}">
                         <thead>
                         <tr>
                             <th lay-data="{type:'numbers'}"></th>
+                            <th lay-data="{field:'name', sort:true, edit:'text'}">接口名</th>
+                            <th lay-data="{field:'type', sort:true, edit:'text'}">接口类型</th>
                             <th lay-data="{field:'cmdno', sort:true, width:100, edit:'text'}">CMD号</th>
-                            <th lay-data="{field:'gtp', sort:true, width:100, edit:'text'}">GTP域号</th>
-                            <th lay-data="{field:'name', edit:'text'}">英文名</th>
-                            <th lay-data="{field:'ch_name', edit:'text'}">中文名</th>
+                            <th lay-data="{field:'cmdtype', sort:true, width:100, edit:'text'}">GTP域号</th>
+                            <th lay-data="{field:'cmdname', edit:'text'}">中文名称</th>
                         </tr>
                         </thead>
                     </table>
@@ -75,9 +76,10 @@
     </div>
 </script>
 <script type="text/html" id="switchTpl">
-{% raw %}
-    <input type="checkbox" name="sex" value="{{d.enable}}" lay-skin="switch" lay-text="√|×" lay-filter="enableDemo" {{ d.enable == true ? 'checked' : '' }}/>
-{% endraw %}
+    {% raw %}
+    <input type="checkbox" name="sex" value="{{d.enable}}" lay-skin="switch" lay-text="√|×" lay-filter="enableDemo" {{
+           d.enable== true ? 'checked' : '' }}/>
+    {% endraw %}
 </script>
 <script>layui.use('laydate', function () {
     var laydate = layui.laydate;

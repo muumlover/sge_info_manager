@@ -13,7 +13,9 @@
 @Desc    : 
     
 """
+from .app import AppInfo
 from .base import mid_project
+from .basic import BasicInfo
 from .cmd import CMDInfo
 from .db import DBInfo
-from .struct import STRUCTInfo
+from .project import ProjectInfo
