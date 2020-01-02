@@ -22,12 +22,25 @@ class IndexView(View):
                     'link': module.app.router.get('config').url_for(),
                 })
 
+        sub_index += [
+            {
+                'icon': '',
+                'title': '周报系统',
+                'link': 'http://mars.sge-tech.com/',
+            },
+            {
+                'icon': '',
+                'title': '开发管理平台',
+                'link': 'http://nuggets.sge-tech.com/',
+            },
+        ]
+
         return {
-            'name': 'AutoCommand',
+            'name': 'SGE CENTER',
             'main_menu': [
                 {
                     'icon': '',
-                    'title': '签到中心',
+                    'title': '所有应用',
                     'sub_menu': sub_index + [
                         {
                             'icon': '',
@@ -38,7 +51,7 @@ class IndexView(View):
                 },
                 {
                     'icon': '',
-                    'title': '签到管理',
+                    'title': '应用设置',
                     'sub_menu': sub_config + [
 
                     ]

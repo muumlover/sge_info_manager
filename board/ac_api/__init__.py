@@ -16,6 +16,7 @@
 
 from ac_api._database import DataManager
 from ac_api._global import get_scheduler
+from ac_api._plug_in import PlugIn
 from ac_api._request import AcRequest
 
 

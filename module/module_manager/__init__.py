@@ -1,4 +1,4 @@
-from .module_manager import module_manager as get_app
+from .plug_app import get_plug
 
 plug_info = {
     'title': '插件管理',

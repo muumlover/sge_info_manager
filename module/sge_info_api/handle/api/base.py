@@ -24,7 +24,7 @@ from aiohttp.web_urldispatcher import View
 
 @middleware
 async def mid_project(request: Request, handler: Callable[[Request], Awaitable[StreamResponse]]) -> StreamResponse:
-    if request.rel_url.parts[2] == 'api':
+    if 'project' in request.match_info and 'application' in request.match_info:
         persudo_name = 'persudo_{project}_{application}'.format(
             project=request.match_info.get('project', ''),
             application=request.match_info.get('application', ''),

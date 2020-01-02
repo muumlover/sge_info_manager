@@ -14,30 +14,21 @@
     
 """
 
-import os
-
-import aiohttp_jinja2
-import jinja2
 from aiohttp import web
 
+from ac_api import PlugIn
 from .handle.handle_config import ConfigView
 
 
-async def init(app):
+async def init(plug):
     pass
 
 
-def module_manager():
-    app = web.Application()
-
-    module_path = os.path.dirname(os.path.abspath(__file__))
-    aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(module_path + '/template'))
-
-    app.router.add_view('/config', ConfigView, name='config')
-
-    app.on_startup.append(init)
-    return app
+def get_plug():
+    plug = PlugIn(on_startup=init)
+    plug.router.add_view('/config', ConfigView, name='config')
+    return plug
 
 
 if __name__ == '__main__':
-    web.run_app(module_manager())
+    web.run_app(get_plug())

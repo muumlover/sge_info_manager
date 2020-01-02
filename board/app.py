@@ -5,9 +5,8 @@ import os
 import pathlib
 import sys
 
-from aiohttp import web
-
 from ac_api import AcApi
+from aiohttp import web
 from setter.ac_api_setter import ac_api_set
 from setter.module_setter import module_set, module_dir
 from setter.resource_setter import resource_set
@@ -44,17 +43,17 @@ class BoardApplication(web.Application):
         self.module_enable = {}
         self.need_hot_restart = False
         self._api = AcApi('board', self)
-        with self._api.data_manager('module') as module:
-            if 'enable' not in module:
-                module['enable'] = []
-            if 'module_manager' not in module['enable']:
-                module['enable'] += ['module_manager']
+        with self._api.data_manager('module') as d_module:
+            if 'enable' not in d_module:
+                d_module['enable'] = []
+            if 'module_manager' not in d_module['enable']:
+                d_module['enable'] += ['module_manager']
             for module_name in os.listdir(pathlib.Path('.') / module_dir):
                 if module_name in self.module_all:
                     continue
                 module_path = f'{module_dir}.{module_name}'
                 module_lib = None
-                if module_name in module['enable']:
+                if module_name in d_module['enable']:
                     module_lib = importlib.import_module(module_path)
                     if not module_lib.plug_info:
                         del sys.modules[module_path]
@@ -65,20 +64,20 @@ class BoardApplication(web.Application):
                     lib=module_lib,
                     app=None,
                     loaded=False,
-                    enable=module_name in module['enable'],
+                    enable=module_name in d_module['enable'],
                     message=''
                 )
 
     def enable_module(self, plug_name):
-        with self._api.data_manager('module') as module:
-            if plug_name not in module['enable']:
-                module['enable'].append(plug_name)
+        with self._api.data_manager('module') as d_module:
+            if plug_name not in d_module['enable']:
+                d_module['enable'].append(plug_name)
                 self.hot_restart()
 
     def disable_module(self, plug_name):
-        with self._api.data_manager('module') as module:
-            if plug_name in module['enable']:
-                module['enable'].remove(plug_name)
+        with self._api.data_manager('module') as d_module:
+            if plug_name in d_module['enable']:
+                d_module['enable'].remove(plug_name)
                 self.hot_restart()
 
     def hot_restart(self):
@@ -137,18 +136,18 @@ if __name__ == '__main__':
         level=logging.NOTSET
     )
     while True:
-        app = get_app()
-        web.run_app(app)
+        board = get_app()
+        web.run_app(board, port=80)
         logging.info('web app stop')
-        if app.need_hot_restart:
+        if board.need_hot_restart:
             asyncio.set_event_loop(asyncio.new_event_loop())
-            for module in app.module_all.values():
+            for module in board.module_all.values():
                 if module.lib:
                     del sys.modules[module.path]
                     del module.app
                     del module.lib
                 del module
-            del app
+            del board
             logging.info('web app begin hot restart')
         else:
             logging.info('web app now exit')
