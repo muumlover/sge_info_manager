@@ -13,9 +13,9 @@ def get_plug():
     plug.router.add_view(r'/{project}/{application}/db', CmdListView)
     plug.router.add_view(r'/{project}/{application}/db/{name:\w*}', CmdView)
     plug.router.add_view(r'/{project}/{application}/cmd', CmdListView)
-    plug.router.add_view(r'/{project}/{application}/cmd/{name:\w*}', CmdView)
-    plug.router.add_view(r'/{project}/{application}/struct', StructListView)
-    plug.router.add_view(r'/{project}/{application}/struct/{name:\w*}', StructView)
+    plug.router.add_view(r'/{project}/{application}/cmd/{command:\w*}', CmdView)
+    plug.router.add_view(r'/{project}/{application}/basic', BasicListView)
+    plug.router.add_view(r'/{project}/{application}/basic/{name:\w*}', BasicView)
     plug.router.add_view('', HomeView, name='index')
     return plug
 

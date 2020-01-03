@@ -17,7 +17,7 @@ from aiohttp.web_urldispatcher import View
 from aiohttp_jinja2 import template
 
 
-class StructListView(View):
+class BasicListView(View):
     @template('struct_list.jinja2')
     async def get(self):
         return {
@@ -26,7 +26,7 @@ class StructListView(View):
         }
 
 
-class StructView(View):
+class BasicView(View):
     @template('struct_list.jinja2')
     async def get(self):
         return {

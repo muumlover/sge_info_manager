@@ -15,4 +15,4 @@
 """
 from .home import HomeView
 from .cmd import CmdListView, CmdView
-from .struct import StructListView, StructView
+from .struct import BasicListView, BasicView

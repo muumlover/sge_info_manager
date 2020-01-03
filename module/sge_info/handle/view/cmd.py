@@ -30,7 +30,7 @@ class CmdView(View):
     @template('cmd_show.jinja2')
     async def get(self):
         return {
-            'cmd_prj': self.request.match_info.get('project', ''),
-            'cmd_app': self.request.match_info.get('application', ''),
-            'cmd_name': self.request.match_info.get('name', ''),
+            'project': self.request.match_info.get('project', ''),
+            'application': self.request.match_info.get('application', ''),
+            'command': self.request.match_info.get('command', ''),
         }
